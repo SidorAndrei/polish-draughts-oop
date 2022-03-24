@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class Pawn {
     private final Color color;
-    private final String symbol;
+    private String symbol;
     private int[] position;
     private boolean isCrowned = false;
 
@@ -21,6 +21,39 @@ public class Pawn {
         }
     }
 
+    public boolean hasFutureJumps(Pawn[][] fields){
+        int row = position[0];
+        int col = position[1];
+        if(row - 2 >= 0 && col - 2 >= 0)
+            if(fields[row - 1][col - 1] != null)
+                if(!fields[row - 1][col - 1].toString().equals(symbol)){
+                    if(fields[row - 2][col - 2] == null){
+                        return true;
+                    }
+                }
+        if(row - 2 >= 0 && col + 2 < fields.length)
+            if(fields[row - 1][col + 1] != null)
+                if(!fields[row - 1][col + 1].toString().equals(symbol)){
+                    if(fields[row - 2][col + 2] == null){
+                        return true;
+                    }
+                }
+
+        if(row + 2 < fields.length  && col - 2 >= 0)
+            if(fields[row + 1][col - 1] != null)
+                if(!fields[row + 1][col - 1].toString().equals(symbol)){
+                    if(fields[row + 2][col - 2] == null){
+                        return true;
+                    }
+                }
+        if(row + 2 < fields.length && col + 2 < fields.length)
+            if(fields[row + 1][col + 1] != null)
+                if(!fields[row + 1][col + 1].toString().equals(symbol)){
+                    return fields[row + 2][col + 2] == null;
+                }
+        return false;
+    }
+
     public String[] getAvailableMoves(Pawn[][] fields){
         String[] availableMoves = new String[0];
         int row = position[0];
@@ -32,9 +65,9 @@ public class Pawn {
                     availableMoves = addToArray(availableMoves, transformInCoordinate(row - 1, col - 1));
                 }
             }
-            else if(fields[row - 1][col - 1] != null)
+            if(fields[row - 1][col - 1] != null && row - 2 >= 0 && col - 2 >= 0)
                 if(!fields[row - 1][col - 1].toString().equals(symbol)){
-                    if(fields[row - 2][col - 2] == null && row - 2 >= 0 && col - 2 >= 0){
+                    if(fields[row - 2][col - 2] == null ){
                         availableMoves = addToArray(availableMoves, transformInCoordinate(row - 2, col - 2));
                     }
             }
@@ -45,12 +78,12 @@ public class Pawn {
                     availableMoves = addToArray(availableMoves, transformInCoordinate(row - 1, col + 1));
                 }
             }
-            else if(fields[row - 1][col + 1] != null)
+            if(fields[row - 1][col + 1] != null && row - 2 >= 0 && col + 2 < fields.length)
                 if(!fields[row - 1][col + 1].toString().equals(symbol)){
-                    if(fields[row - 2][col + 2] == null && row - 2 >= 0 && col + 2 < fields.length){
+                    if(fields[row - 2][col + 2] == null ){
                         availableMoves = addToArray(availableMoves, transformInCoordinate(row - 2, col + 2));
                     }
-            }
+                }
         }
         if(row + 1 < fields.length  && col - 1 >= 0){
             if(this.color == Color.RED || this.isCrowned){
@@ -58,9 +91,9 @@ public class Pawn {
                     availableMoves = addToArray(availableMoves, transformInCoordinate(row + 1, col - 1));
                 }
             }
-            else if(fields[row + 1][col - 1] != null)
+             if(fields[row + 1][col - 1] != null && row + 2 < fields.length  && col - 2 >= 0)
                 if(!fields[row + 1][col - 1].toString().equals(symbol)){
-                    if(fields[row - 2][col - 2] == null && row + 2 < fields.length  && col - 2 >= 0){
+                    if(fields[row + 2][col - 2] == null){
                         availableMoves = addToArray(availableMoves, transformInCoordinate(row + 2, col - 2));
                     }
             }
@@ -71,9 +104,9 @@ public class Pawn {
                     availableMoves = addToArray(availableMoves, transformInCoordinate(row + 1, col + 1));
                 }
             }
-            else if(fields[row + 1][col + 1] != null)
+            if(fields[row + 1][col + 1] != null && row + 2 < fields.length && col + 2 < fields.length)
                 if(!fields[row + 1][col + 1].toString().equals(symbol)){
-                    if(fields[row + 2][col + 2] == null && row + 2 < fields.length && col + 2 < fields.length){
+                    if(fields[row + 2][col + 2] == null ){
                         availableMoves = addToArray(availableMoves, transformInCoordinate(row + 2, col + 2));
                     }
             }
@@ -81,8 +114,45 @@ public class Pawn {
         return availableMoves;
     }
 
+    public String[] getJumpMoves(Pawn[][] fields){
+        String[] jumpMoves = new String[0];
+        int row = position[0];
+        int col = position[1];
+        if(row - 2 >= 0 && col - 2 >= 0)
+            if(fields[row - 1][col - 1] != null)
+                if(!fields[row - 1][col - 1].toString().equals(symbol)){
+                    if(fields[row - 2][col - 2] == null){
+                       jumpMoves = addToArray(jumpMoves, transformInCoordinate(row - 2, col - 2));
+                    }
+                }
+        if(row - 2 >= 0 && col + 2 < fields.length)
+            if(fields[row - 1][col + 1] != null)
+                if(!fields[row - 1][col + 1].toString().equals(symbol)){
+                    if(fields[row - 2][col + 2] == null){
+                        jumpMoves = addToArray(jumpMoves, transformInCoordinate(row - 2, col + 2));
+                    }
+                }
+
+        if(row + 2 < fields.length  && col - 2 >= 0)
+            if(fields[row + 1][col - 1] != null)
+                if(!fields[row + 1][col - 1].toString().equals(symbol)){
+                    if(fields[row + 2][col - 2] == null){
+                        jumpMoves = addToArray(jumpMoves, transformInCoordinate(row + 2, col - 2));
+                    }
+                }
+        if(row + 2 < fields.length && col + 2 < fields.length)
+            if(fields[row + 1][col + 1] != null)
+                if(!fields[row + 1][col + 1].toString().equals(symbol)){
+                    if(fields[row + 2][col + 2] == null){
+                        jumpMoves = addToArray(jumpMoves, transformInCoordinate(row + 2, col + 2));
+                    }
+                }
+        return jumpMoves;
+    }
+
     public void setPosition(int[] position) {
         this.position = position;
+
     }
 
     @Override
@@ -94,6 +164,10 @@ public class Pawn {
         return this.color;
     }
 
+    public void setCrowned(boolean crowned) {
+        this.isCrowned = crowned;
+        this.symbol = "♚";
+    }
     //PRIVATE METHODS
 
     private String[] addToArray(String[] array, String element){
@@ -108,7 +182,7 @@ public class Pawn {
     }
 
 
-    public int[] getPosition() {
-        return position;
+    public String getPosition() {
+        return transformInCoordinate(position[0], position[1]);
     }
 }

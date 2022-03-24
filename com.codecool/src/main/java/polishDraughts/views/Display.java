@@ -1,5 +1,6 @@
 package polishDraughts.views;
 
+import org.apache.commons.lang3.ArrayUtils;
 import polishDraughts.models.Pawn;
 import polishDraughts.utils.Color;
 
@@ -97,9 +98,19 @@ public class Display {
     }
 
 
-    public int[] chooseMove(){
-
-        return null;
+    public int[] chooseMove(Pawn player, Pawn[][] fields){
+        Scanner in = new Scanner(System.in);
+        System.out.printf("Player %s choose your move: ", player.getColor());
+        String move = in.nextLine();
+        if (ArrayUtils.contains(player.getAvailableMoves(fields),move)){
+            int row = (int)move.charAt(0) - 65;
+            int col = Integer.parseInt(move.substring(1))-1;
+            return new int[] {row, col};
+        }
+        else{
+            System.out.println("Try again!!!");
+            return chooseMove(player, fields);
+        }
     }
 
 

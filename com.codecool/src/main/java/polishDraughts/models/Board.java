@@ -43,6 +43,10 @@ public class Board {
         }
     }
 
+    public void movePawn(){
+
+    }
+
     public Pawn[][] getFields() {
         return fields;
     }

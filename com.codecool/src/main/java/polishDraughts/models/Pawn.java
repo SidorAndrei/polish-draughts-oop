@@ -13,7 +13,7 @@ public class Pawn {
     public Pawn(Color color, int[] position) {
         this.color = color;
         this.position = position;
-        if(color == Color.RED){
+        if(this.color == Color.CYAN){
             this.symbol = "▲";
         }
         else{
@@ -32,7 +32,7 @@ public class Pawn {
                     availableMoves = addToArray(availableMoves, transformInCoordinate(row - 1, col - 1));
                 }
             }
-            else if(fields[row + 1][col + 1] != null)
+            else if(fields[row - 1][col - 1] != null)
                 if(!fields[row - 1][col - 1].toString().equals(symbol)){
                     if(fields[row - 2][col - 2] == null && row - 2 >= 0 && col - 2 >= 0){
                         availableMoves = addToArray(availableMoves, transformInCoordinate(row - 2, col - 2));
@@ -45,7 +45,7 @@ public class Pawn {
                     availableMoves = addToArray(availableMoves, transformInCoordinate(row - 1, col + 1));
                 }
             }
-            else if(fields[row + 1][col + 1] != null)
+            else if(fields[row - 1][col + 1] != null)
                 if(!fields[row - 1][col + 1].toString().equals(symbol)){
                     if(fields[row - 2][col + 2] == null && row - 2 >= 0 && col + 2 < fields.length){
                         availableMoves = addToArray(availableMoves, transformInCoordinate(row - 2, col + 2));
@@ -58,7 +58,7 @@ public class Pawn {
                     availableMoves = addToArray(availableMoves, transformInCoordinate(row + 1, col - 1));
                 }
             }
-            else if(fields[row + 1][col + 1] != null)
+            else if(fields[row + 1][col - 1] != null)
                 if(!fields[row + 1][col - 1].toString().equals(symbol)){
                     if(fields[row - 2][col - 2] == null && row + 2 < fields.length  && col - 2 >= 0){
                         availableMoves = addToArray(availableMoves, transformInCoordinate(row + 2, col - 2));
@@ -107,4 +107,8 @@ public class Pawn {
         return String.format("%s%s", (char)(row + 65), col + 1);
     }
 
+
+    public int[] getPosition() {
+        return position;
+    }
 }

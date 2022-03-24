@@ -30,10 +30,10 @@ public class Board {
                 }
                 else{
                     if(row <= 2){
-                        fields[row][col] = new Pawn(Color.CYAN, new int[] {row, col});
+                        fields[row][col] = new Pawn(Color.RED, new int[] {row, col});
                     }
                     else if(row >= boardSize - 3){
-                        fields[row][col] = new Pawn(Color.RED, new int[] {row, col});
+                        fields[row][col] = new Pawn(Color.CYAN, new int[] {row, col});
                     }
                     else{
                         fields[row][col] = null;

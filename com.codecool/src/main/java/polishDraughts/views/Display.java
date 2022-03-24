@@ -38,7 +38,7 @@ public class Display {
             StringBuilder line = new StringBuilder(String.format("%s ", (char)(row + 65)));
             for (int col = 0; col < fields[row].length; col++){
                 if (fields[row][col] != null){
-                    if(fields[row][col].getColor() == Color.CYAN){
+                    if(fields[row][col].getColor() == Color.RED){
                         line.append("\u001b[40m\u001B[31m ");
                         line.append(fields[row][col]);
                         line.append(" \u001B[0m");

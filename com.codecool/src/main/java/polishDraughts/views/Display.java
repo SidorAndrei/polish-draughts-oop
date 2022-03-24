@@ -11,18 +11,18 @@ public class Display {
 
     public int getBoardSize() {
         Scanner in = new Scanner(System.in);
-        System.out.print("Please enter board size(10-20): ");
+        System.out.print("\u001b[31mPlease enter board size(10-20): \u001b[0m");
         try{
             int size = in.nextInt();
             if(size >= 10 && size <=20){
                 return size;
             }
             else{
-                System.out.println("The size must be between 10 and 20!!!");
+                System.out.println("\u001b[35mThe size must be between 10 and 20!!!\u001b[0m");
                 return getBoardSize();
             }
         }catch (Exception e){
-            System.out.println("A number is required!");
+            System.out.println("\u001b[35mA number is required!\u001b[0m");
             return getBoardSize();
         }
     }
@@ -90,20 +90,20 @@ public class Display {
             int row = (int)coordinate.charAt(0) - 65;
             int col = Integer.parseInt(coordinate.substring(1))-1;
             if(row < 0 || row >= fields.length  ){
-                System.out.printf("Row should be between A and %s\n", (char)(fields.length + 64));
+                System.out.printf("\u001b[35mRow should be between A and %s\n\u001b[0m", (char)(fields.length + 64));
                 return choosePawn(fields, color, forcedToMove);
             }
             else if(col < 0 || col >= fields.length){
-                System.out.printf("Column should be between 1 and %s\n", fields.length);
+                System.out.printf("\u001b[35mColumn should be between 1 and %s\n\u001b[0m", fields.length);
                 return choosePawn(fields, color, forcedToMove);
             }
             else{
                 if(fields[row][col] == null){
-                    System.out.println("Given coordinate is empty!!!");
+                    System.out.println("\u001b[35mGiven coordinate is empty!!!\u001b[0m");
                     return choosePawn(fields, color, forcedToMove);
                 }
                 else if(fields[row][col].getColor() != color){
-                    System.out.println("You have chosen an enemy pawn!!!");
+                    System.out.println("\u001b[35mYou have chosen an enemy pawn!!!\u001b[0m");
                     return choosePawn(fields, color, forcedToMove);
                 }
                 if(forcedToMove.length != 0){
@@ -111,7 +111,7 @@ public class Display {
                         return new int[] {row, col};
                     }
                     else{
-                        System.out.printf("You are forced to move one of the pawns %s", Arrays.toString(forcedToMove));
+                        System.out.printf("\u001b[35mYou are forced to move the pawn according to the given coordinate: %s\u001b[0m\n", forcedToMove[0]);
                         return choosePawn(fields, color, forcedToMove);
                     }
                 }
@@ -119,10 +119,10 @@ public class Display {
             }
 
         }catch (NumberFormatException e){
-            System.out.println("Column's coordinate should be a number!!! ");
+            System.out.println("\u001b[35mColumn's coordinate should be a number!!! \u001b[0m");
             return choosePawn(fields, color, forcedToMove);
         }catch (Exception e){
-            System.out.println("You have to provide a coordinate!! ");
+            System.out.println("\u001b[35mYou have to provide a coordinate!! \u001b[0m");
             return choosePawn(fields, color, forcedToMove);
         }
 
@@ -143,7 +143,7 @@ public class Display {
         try{
             move = in.nextLine().toUpperCase();
         }catch (Exception e){
-            System.out.println("You have to provide a coordinate!! ");
+            System.out.println("\u001b[35mYou have to provide a coordinate!! \u001b[0m");
             return chooseMove(player, fields);
         }
         if(player.getJumpMoves(fields).length != 0) {
@@ -162,16 +162,24 @@ public class Display {
         }
         else{
             if(Arrays.equals(player.getAvailableMoves(fields), new String[0])){
-                System.out.println("The chosen pawn can't be moved!");
+                System.out.println("\u001b[35mThe chosen pawn can't be moved!\u001b[0m");
                 return new int[]{-1, -1};
             }
-            System.out.println("Try again!!!");
+            System.out.println("\u001b[35mThat is not a valid move for the chosen pawn!!!\u001b[0m");
             return chooseMove(player, fields);
         }
     }
 
+    public void printHints(String[] hints){
+        StringBuilder hintLine = new StringBuilder("\u001b[34m You can move to the next coordinates: ");
+        for(String hint: hints){
+            hintLine.append(String.format("%s ", hint));
+        }
+        hintLine.append("\u001b[0m");
+        System.out.println(hintLine);
+    }
 
     public void displayWinner(Color player){
-        System.out.printf("Player %s has won!", player);
+        System.out.printf("\u001b[35mPlayer %s has won!\u001b[0m", player);
     }
 }

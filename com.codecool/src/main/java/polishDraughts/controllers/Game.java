@@ -65,9 +65,9 @@ public class Game {
         int[] from = display.choosePawn(board.getFields(), player, board.getForcedToMovePawns(player));
         display.printBoard(board.getFields(), from);
         if(board.getFields()[from[0]][from[1]].getJumpMoves(board.getFields()).length != 0)
-            System.out.println(Arrays.toString(board.getFields()[from[0]][from[1]].getJumpMoves(board.getFields())));
+            display.printHints(board.getFields()[from[0]][from[1]].getJumpMoves(board.getFields()));
         else
-            System.out.println(Arrays.toString(board.getFields()[from[0]][from[1]].getAvailableMoves(board.getFields())));
+            display.printHints(board.getFields()[from[0]][from[1]].getAvailableMoves(board.getFields()));
         int[] to =display.chooseMove(board.getFields()[from[0]][from[1]], board.getFields());
         if(Arrays.equals(to, new int[]{-1, -1})){
             return playerMove(player);

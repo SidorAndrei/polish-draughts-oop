@@ -87,6 +87,7 @@ public class Display {
         System.out.print(line);
         try {
             String coordinate = in.nextLine().toUpperCase();
+            if(coordinate.equals("QUIT")) System.exit(1);
             int row = (int)coordinate.charAt(0) - 65;
             int col = Integer.parseInt(coordinate.substring(1))-1;
             if(row < 0 || row >= fields.length  ){
@@ -142,6 +143,7 @@ public class Display {
         String move;
         try{
             move = in.nextLine().toUpperCase();
+            if(move.equals("QUIT")) System.exit(1);
         }catch (Exception e){
             System.out.println("\u001b[35mYou have to provide a coordinate!! \u001b[0m");
             return chooseMove(player, fields);

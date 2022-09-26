@@ -50,6 +50,9 @@ public class Board {
                 }
             }
         }
+//        fields[0][0] = null;
+//        fields[1][1] =  new Pawn(Color.CYAN, new int[] {1, 1});
+//        fields[2][2] = null;
     }
 
     public void removePawn(int[] position){

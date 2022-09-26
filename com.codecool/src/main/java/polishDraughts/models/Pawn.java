@@ -168,6 +168,11 @@ public class Pawn {
         this.isCrowned = crowned;
         this.symbol = "♚";
     }
+
+    public String getPosition() {
+        return transformInCoordinate(position[0], position[1]);
+    }
+
     //PRIVATE METHODS
 
     private String[] addToArray(String[] array, String element){
@@ -181,8 +186,4 @@ public class Pawn {
         return String.format("%s%s", (char)(row + 65), col + 1);
     }
 
-
-    public String getPosition() {
-        return transformInCoordinate(position[0], position[1]);
-    }
 }
